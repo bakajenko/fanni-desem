@@ -80,14 +80,70 @@
 <body>
 
   <h1>Szeretlek Fanni ❤️</h1>
-  <h2>
-Tudnod kell hogy szeretlek. Szeretlek mintha az életem múlna rajta. 
-Elvesztem az eszem sokszor annyira szeretlek. Nem egészséges az ahogy néha szeretlek, 
-de az őrülted vagyok. A tiéd. Birtokolsz. Szeretlek és vágyok rád. Vágyok rád amikor felkelek, 
-amikor sírok, amikor nevetek. Kellesz nekem mintha oxigén lennél, mintha sebemre lennél kötszer. 
-Bántani nem akarlak csak szeretni, ezért magammal kell beszélni, hogy szeretném kedvesem boldoggá tenni, 
-amíg még testem tud levegőt venni. Szeretni azt örökké örökké szeretnélek, vigyáznom kell törékeny szívedre.
-</h2>
+  <style>
+    .envelope {
+        width: 200px;
+        height: 130px;
+        background: #ff4d6d;
+        margin: 50px auto;
+        position: relative;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 0, 80, 0.4);
+        transition: transform 0.3s;
+    }
+
+    .envelope:hover {
+        transform: scale(1.05);
+    }
+
+    .envelope:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 70px solid #ff758f;
+    }
+
+    .letter {
+        display: none;
+        width: 80%;
+        margin: 30px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 0, 80, 0.3);
+        font-size: 20px;
+        line-height: 1.6;
+        animation: fadeIn 1s ease forwards;
+        white-space: pre-line;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="envelope" onclick="showLetter()"></div>
+
+<div id="loveLetter" class="letter">
+Tudnod kell hogy szeretlek. Szeretlek mintha az életem múlna rajta.
+Elvesztem az eszem sokszor annyira szeretlek. Egyáltalán nem egészséges az ahogy néha szeretlek,
+őrülted vagyok, megőrülök érted. A tiéd vagyok, birtokolsz. Szeretlek és vágyok rád, csak rád. Vágyok rád amikor felkelek,
+amikor sírok, amikor nevetek. Kellesz nekem mintha oxigén lennél, mintha sebemre lennél kötszer.
+Bántani nem akarlak csak szeretni, ezért magammal kell beszélni, hogy szeretném kedvesem boldoggá tenni,
+amíg még testem tud levegőt venni. Szeretni azt örökké örökké szeretnélek.
+</div>
+
+<script>
+function showLetter() {
+    document.getElementById("loveLetter").style.display = "block";
+}
+</script>
+
 
   <script>
     function createHeart() {
@@ -105,5 +161,6 @@ amíg még testem tud levegőt venni. Szeretni azt örökké örökké szeretné
 
 </body>
 </html>
+
 
 
