@@ -213,23 +213,24 @@
     }
 
     navigator.serviceWorker.register("firebase-messaging-sw.js")
-      .then((registration) => {
-        messaging.useServiceWorker(registration);
+  .then(async (registration) => {
+    const permission = await Notification.requestPermission();
 
-        return Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            return messaging.getToken({ vapidKey: vapidPublicKey });
-          }
-        });
-      })
-      .then((token) => {
-        if (token) {
-          console.log("Token:", token);
-          registerToken(username, token);
-        }
-      })
-      .catch(console.error);
+    if (permission === "granted") {
+      const token = await messaging.getToken({
+        vapidKey: vapidPublicKey,
+        serviceWorkerRegistration: registration
+      });
+
+      if (token) {
+        console.log("Token:", token);
+        registerToken(username, token);
+      }
+    }
+  })
+  .catch(console.error);
   </script>
 
 </body>
 </html>
+
