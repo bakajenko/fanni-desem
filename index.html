@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Szeretlek Fanni</title>
+
   <style>
     body {
       margin: 0;
       height: 100vh;
       overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #ff9ec4, #ff6fa8, #ff3e8a);
@@ -30,12 +32,14 @@
       animation: fadeIn 3s ease forwards;
       opacity: 0;
       z-index: 10;
+      margin-bottom: 20px;
     }
 
     @keyframes fadeIn {
       to { opacity: 1; }
     }
 
+    /* Szívecskék */
     .heart {
       position: absolute;
       width: 20px;
@@ -55,42 +59,26 @@
       border-radius: 50%;
     }
 
-    .heart:before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart:after {
-      left: -10px;
-      top: 0;
-    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: -10px; top: 0; }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-800px) rotate(45deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
     }
-  </style>
-</head>
-<body>
 
-  <h1>Minden okés lesz ❤️</h1>
-  <style>
+    /* Boríték */
     .envelope {
         width: 200px;
         height: 130px;
         background: #ff4d6d;
-        margin: 50px auto;
+        margin-top: 20px;
         position: relative;
         cursor: pointer;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(255, 0, 80, 0.4);
         transition: transform 0.3s;
+        z-index: 20;
     }
 
     .envelope:hover {
@@ -107,6 +95,7 @@
         border-bottom: 70px solid #ff758f;
     }
 
+    /* Levél */
     .letter {
         display: none;
         width: 80%;
@@ -119,28 +108,67 @@
         line-height: 1.6;
         animation: fadeIn 1s ease forwards;
         white-space: pre-line;
+        z-index: 30;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+    /* Tűzijáték */
+    .firework {
+        position: fixed;
+        width: 5px;
+        height: 5px;
+        background: transparent;
+        border-radius: 50%;
+        animation: explode 1s ease-out forwards;
+        pointer-events: none;
+        z-index: 5;
     }
-</style>
 
-<div class="envelope" onclick="showLetter()"></div>
+    @keyframes explode {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(20); opacity: 0; }
+    }
+  </style>
+</head>
 
-<div id="loveLetter" class="letter">
-Nagyon ügyes leszel ne aggódj baby!!!!
-</div>
+<body>
 
-<script>
-function showLetter() {
-    document.getElementById("loveLetter").style.display = "block";
-}
-</script>
+  <h1>Ügyes vagy baby!✨</h1>
 
+  <div class="envelope" onclick="showLetter()"></div>
+
+  <div id="loveLetter" class="letter">
+    Nyeremény: 10000 puszi!!!
+  </div>
 
   <script>
+    function showLetter() {
+        document.getElementById("loveLetter").style.display = "block";
+        startFireworks();
+    }
+
+    function startFireworks() {
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createFirework, i * 150);
+        }
+    }
+
+    function createFirework() {
+        const fw = document.createElement("div");
+        fw.className = "firework";
+        fw.style.left = Math.random() * window.innerWidth + "px";
+        fw.style.top = Math.random() * window.innerHeight + "px";
+        fw.style.background = randomColor();
+        document.body.appendChild(fw);
+
+        setTimeout(() => fw.remove(), 1000);
+    }
+
+    function randomColor() {
+        const colors = ["#ff4d6d", "#ffb3c6", "#ff8fab", "#ffccd5", "#ff577f", "#ff99ac"];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    /* Szívecskék */
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -156,7 +184,3 @@ function showLetter() {
 
 </body>
 </html>
-
-
-
-
