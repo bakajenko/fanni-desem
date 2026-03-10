@@ -180,6 +180,7 @@
   <!-- FIREBASE + PUSH ÉRTESÍTÉS -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -189,13 +190,27 @@
       storageBucket: "projectfanni-97274.appspot.com",
       messagingSenderId: "270354212279",
       appId: "1:270354212279:web:a3079991dc6e8bb228f432",
-      measurementId: "G-0YEFJ0Y8G5"
+      measurementId: "G-0YEFJ0Y8G5",
+      databaseURL: "https://projectfanni-97274-default-rtdb.europe-west1.firebasedatabase.app/"
     };
 
     firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
+    const db = firebase.database();
 
     const vapidPublicKey = "BEIoodZurTznhF7e8rZDAYAArNAvXYLjr13G2hn4Y9bUHZ8Xsa19ZPHBIWhXI86Dqc_2PxFGI1SxFvSBeX0wzmQ";
+
+    // Felhasználónév bekérése
+    let username = localStorage.getItem("username");
+    if (!username) {
+      username = prompt("Add meg a neved (pl. Fanni):");
+      localStorage.setItem("username", username);
+    }
+
+    // Token regisztráció
+    function registerToken(username, token) {
+      db.ref("tokens/" + username).set(token);
+    }
 
     navigator.serviceWorker.register("firebase-messaging-sw.js")
       .then((registration) => {
@@ -209,12 +224,11 @@
       })
       .then((token) => {
         if (token) {
-          console.log("Fanni tokenje:", token);
+          console.log("Token:", token);
+          registerToken(username, token);
         }
       })
-      .catch((err) => {
-        console.error("Hiba:", err);
-      });
+      .catch(console.error);
   </script>
 
 </body>
