@@ -39,7 +39,6 @@
       to { opacity: 1; }
     }
 
-    /* Szívecskék */
     .heart {
       position: absolute;
       width: 20px;
@@ -67,7 +66,6 @@
       100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
     }
 
-    /* Boríték */
     .envelope {
         width: 200px;
         height: 130px;
@@ -95,7 +93,6 @@
         border-bottom: 70px solid #ff758f;
     }
 
-    /* Levél */
     .letter {
         display: none;
         width: 80%;
@@ -111,7 +108,6 @@
         z-index: 30;
     }
 
-    /* Tűzijáték */
     .firework {
         position: fixed;
         width: 5px;
@@ -168,7 +164,6 @@
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    /* Szívecskék */
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -180,6 +175,46 @@
     }
 
     setInterval(createHeart, 300);
+  </script>
+
+  <!-- FIREBASE + PUSH ÉRTESÍTÉS -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAJ15HGC0AAPv5TD6CMse_nV4MaDVWzc3M",
+      authDomain: "projectfanni-97274.firebaseapp.com",
+      projectId: "projectfanni-97274",
+      storageBucket: "projectfanni-97274.appspot.com",
+      messagingSenderId: "270354212279",
+      appId: "1:270354212279:web:a3079991dc6e8bb228f432",
+      measurementId: "G-0YEFJ0Y8G5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    const vapidPublicKey = "BEIoodZurTznhF7e8rZDAYAArNAvXYLjr13G2hn4Y9bUHZ8Xsa19ZPHBIWhXI86Dqc_2PxFGI1SxFvSBeX0wzmQ";
+
+    navigator.serviceWorker.register("firebase-messaging-sw.js")
+      .then((registration) => {
+        messaging.useServiceWorker(registration);
+
+        return Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            return messaging.getToken({ vapidKey: vapidPublicKey });
+          }
+        });
+      })
+      .then((token) => {
+        if (token) {
+          console.log("Fanni tokenje:", token);
+        }
+      })
+      .catch((err) => {
+        console.error("Hiba:", err);
+      });
   </script>
 
 </body>
